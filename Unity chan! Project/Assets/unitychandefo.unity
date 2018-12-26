@@ -138,11 +138,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 281465201}
-  m_LocalRotation: {x: 0.0853282, y: -0, z: -0, w: 0.996353}
-  m_LocalPosition: {x: -0.12, y: 1.83, z: -2.61}
-  m_LocalScale: {x: 1, y: 1.0447879, z: 1}
+  m_LocalRotation: {x: -0.46754724, y: 0.53047085, z: 0.46754745, w: 0.53047115}
+  m_LocalPosition: {x: -0.49122927, y: -2.6220388, z: 0.12000037}
+  m_LocalScale: {x: 1, y: 1.0447878, z: 1}
   m_Children: []
-  m_Father: {fileID: 624517283}
+  m_Father: {fileID: 1633387675}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 9.790001, y: 0, z: 0}
 --- !u!81 &281465203
@@ -207,10 +207,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 5
---- !u!4 &624517283 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 400066, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
-  m_PrefabInternal: {fileID: 871120196}
 --- !u!1001 &871120196
 Prefab:
   m_ObjectHideFlags: 0
@@ -399,6 +395,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   speed: 0
   kando: 0
+  neckBone: {fileID: 1633387675}
 --- !u!136 &883403306
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -623,3 +620,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1633387675 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400064, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
+  m_PrefabInternal: {fileID: 871120196}

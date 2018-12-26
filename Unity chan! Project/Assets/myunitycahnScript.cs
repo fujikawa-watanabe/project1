@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class myunitycahnScript : MonoBehaviour {
+public class myunitycahnScript : MonoBehaviour
+{
     public GameObject Player;
+
     public float speed;
     public float kando;
     private Transform PlayerTransform;
+    public Transform neckBone;　//インスペクターで脊髄を選択
     private Animator animator;
     private Rigidbody _rigidbody;
-    float yaw,pitch;
+    float yaw, pitch;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         speed = 5F;
         kando = 1F;
         animator = GetComponent<Animator>();
@@ -24,18 +28,16 @@ public class myunitycahnScript : MonoBehaviour {
     void Update()
     {
         //float X_Rotation = Input.GetAxis("Mouse X");
-        yaw += Input.GetAxis("Mouse X");
-        pitch -= Input.GetAxis("Mouse Y");
-        pitch = Mathf.Clamp(pitch, -30, 30);
+        yaw += Input.GetAxis("Mouse X"); //マウスの入力X
+        pitch += Input.GetAxis("Mouse Y");　//マウスの入力Y
+        pitch = Mathf.Clamp(pitch, -30, 30); //ピッチ角の制限
         //PlayerTransform.transform.Rotate(0, X_Rotation , 0);
-        PlayerTransform.transform.eulerAngles=new Vector3(pitch,yaw,0);
+        PlayerTransform.transform.eulerAngles = new Vector3(0, yaw, 0);　//プレイヤー横回転
 
 
-
-
-        float angleDir = PlayerTransform.transform.eulerAngles.y * (Mathf.PI / 180.0f);
-        Vector3 dir1 = new Vector3(Mathf.Sin(angleDir), 0, Mathf.Cos(angleDir));
-        Vector3 dir2 = new Vector3(-Mathf.Cos(angleDir), 0, Mathf.Sin(angleDir));
+        float angleDir = PlayerTransform.transform.eulerAngles.y * (Mathf.PI / 180.0f); //回転量を取得、ラジアンに変換
+        Vector3 dir1 = new Vector3(Mathf.Sin(angleDir), 0, Mathf.Cos(angleDir));　//正面
+        Vector3 dir2 = new Vector3(-Mathf.Cos(angleDir), 0, Mathf.Sin(angleDir)); //左
 
 
         //歩き
@@ -43,12 +45,12 @@ public class myunitycahnScript : MonoBehaviour {
         {
             PlayerTransform.transform.position += dir1 * speed * 0.3F * Time.deltaTime;
             animator.SetBool("walk", true);
-            
+
         }
         //走り
-        if (Input.GetKey(KeyCode.W)&& Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
         {
-            PlayerTransform.transform.position += dir1 * speed  * Time.deltaTime;
+            PlayerTransform.transform.position += dir1 * speed * Time.deltaTime;
             animator.SetBool("run", true);
 
         }
@@ -97,5 +99,14 @@ public class myunitycahnScript : MonoBehaviour {
         }
 
     }
+    //Updateでアニメーション適用後に直接ボーンをいじる
+    protected virtual void LateUpdate()
+    {
+        if (neckBone != null)
+        {
+            neckBone.Rotate(0f, 0f, pitch);//ピッチ角分脊髄ボーンを回転
+        }
+    }
 }
+
 
