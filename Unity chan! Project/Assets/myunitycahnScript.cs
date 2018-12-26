@@ -9,11 +9,12 @@ public class myunitycahnScript : MonoBehaviour {
     private Transform PlayerTransform;
     private Animator animator;
     private Rigidbody _rigidbody;
+    float yaw,pitch;
 
     // Use this for initialization
     void Start () {
         speed = 5F;
-        kando = 3F;
+        kando = 1F;
         animator = GetComponent<Animator>();
         PlayerTransform = transform.parent;
         _rigidbody = this.GetComponent<Rigidbody>();
@@ -22,9 +23,14 @@ public class myunitycahnScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        float X_Rotation = Input.GetAxis("Mouse X");
-        float Y_Rotation = Input.GetAxis("Mouse Y");
-        PlayerTransform.transform.Rotate(0, X_Rotation * kando, 0);
+        //float X_Rotation = Input.GetAxis("Mouse X");
+        yaw += Input.GetAxis("Mouse X");
+        pitch -= Input.GetAxis("Mouse Y");
+        pitch = Mathf.Clamp(pitch, -30, 30);
+        //PlayerTransform.transform.Rotate(0, X_Rotation , 0);
+        PlayerTransform.transform.eulerAngles=new Vector3(pitch,yaw,0);
+
+
 
 
         float angleDir = PlayerTransform.transform.eulerAngles.y * (Mathf.PI / 180.0f);
