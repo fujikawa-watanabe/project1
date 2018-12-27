@@ -138,9 +138,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 281465201}
-  m_LocalRotation: {x: -0.46754724, y: 0.53047085, z: 0.46754745, w: 0.53047115}
-  m_LocalPosition: {x: -0.49122927, y: -2.6220388, z: 0.12000037}
-  m_LocalScale: {x: 1, y: 1.0447878, z: 1}
+  m_LocalRotation: {x: -0.46754727, y: 0.5304706, z: 0.46754777, w: 0.530471}
+  m_LocalPosition: {x: -0.49122956, y: -2.6220396, z: 0.12000155}
+  m_LocalScale: {x: 1, y: 1.0447887, z: 1}
   m_Children: []
   m_Father: {fileID: 1633387675}
   m_RootOrder: 1
@@ -370,6 +370,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.99910593
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
   m_IsPrefabParent: 0
@@ -394,7 +398,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   speed: 0
-  kando: 0
+  xkando: 3
+  ykando: 3
   neckBone: {fileID: 1633387675}
 --- !u!136 &883403306
 CapsuleCollider:
@@ -419,7 +424,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

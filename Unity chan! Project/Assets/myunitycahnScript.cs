@@ -7,7 +7,8 @@ public class myunitycahnScript : MonoBehaviour
     public GameObject Player;
 
     public float speed;
-    public float kando;
+    public float xkando;
+    public float ykando;
     private Transform PlayerTransform;
     public Transform neckBone;　//インスペクターで脊髄を選択
     private Animator animator;
@@ -18,7 +19,7 @@ public class myunitycahnScript : MonoBehaviour
     void Start()
     {
         speed = 5F;
-        kando = 1F;
+        
         animator = GetComponent<Animator>();
         PlayerTransform = transform.parent;
         _rigidbody = this.GetComponent<Rigidbody>();
@@ -28,8 +29,8 @@ public class myunitycahnScript : MonoBehaviour
     void Update()
     {
         //float X_Rotation = Input.GetAxis("Mouse X");
-        yaw += Input.GetAxis("Mouse X"); //マウスの入力X
-        pitch += Input.GetAxis("Mouse Y");　//マウスの入力Y
+        yaw += Input.GetAxis("Mouse X") * xkando; //マウスの入力X
+        pitch += Input.GetAxis("Mouse Y") * ykando;　//マウスの入力Y
         pitch = Mathf.Clamp(pitch, -30, 30); //ピッチ角の制限
         //PlayerTransform.transform.Rotate(0, X_Rotation , 0);
         PlayerTransform.transform.eulerAngles = new Vector3(0, yaw, 0);　//プレイヤー横回転
@@ -104,7 +105,7 @@ public class myunitycahnScript : MonoBehaviour
     {
         if (neckBone != null)
         {
-            neckBone.Rotate(0f, 0f, pitch);//ピッチ角分脊髄ボーンを回転
+            neckBone.Rotate(0f, 0f, pitch);//ピッチ角 neckボーンを回転
         }
     }
 }
