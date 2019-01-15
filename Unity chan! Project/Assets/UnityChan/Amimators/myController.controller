@@ -64,23 +64,26 @@ AnimatorController:
     m_Motions:
     - serializedVersion: 2
       m_State: {fileID: 1102841249734718564}
-      m_Motion: {fileID: 7400000, guid: 0147e212f97e3d449a4b9e4f5d057180, type: 3}
+      m_Motion: {fileID: 7400002, guid: 654855ad88ee9e94fa40af469846d571, type: 3}
     - serializedVersion: 2
       m_State: {fileID: 1102056448137302766}
-      m_Motion: {fileID: 7400000, guid: 0147e212f97e3d449a4b9e4f5d057180, type: 3}
+      m_Motion: {fileID: 7400002, guid: 654855ad88ee9e94fa40af469846d571, type: 3}
     - serializedVersion: 2
       m_State: {fileID: 1102042980126008944}
-      m_Motion: {fileID: 7400000, guid: 0147e212f97e3d449a4b9e4f5d057180, type: 3}
+      m_Motion: {fileID: 0}
     - serializedVersion: 2
       m_State: {fileID: 1102476181199383890}
-      m_Motion: {fileID: 7400000, guid: 0147e212f97e3d449a4b9e4f5d057180, type: 3}
+      m_Motion: {fileID: 7400002, guid: 654855ad88ee9e94fa40af469846d571, type: 3}
     - serializedVersion: 2
       m_State: {fileID: 1102653758085043148}
-      m_Motion: {fileID: 7400000, guid: 0147e212f97e3d449a4b9e4f5d057180, type: 3}
+      m_Motion: {fileID: 7400002, guid: 654855ad88ee9e94fa40af469846d571, type: 3}
+    - serializedVersion: 2
+      m_State: {fileID: 1102934225842377068}
+      m_Motion: {fileID: 7400002, guid: 654855ad88ee9e94fa40af469846d571, type: 3}
     m_Behaviours: []
     m_BlendingMode: 0
     m_SyncedLayerIndex: 0
-    m_DefaultWeight: 0
+    m_DefaultWeight: 1
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}

@@ -9,6 +9,11 @@ public class myunitycahnScript : MonoBehaviour
     public float speed;
     public float xkando;
     public float ykando;
+    public GameObject bullet;
+    public Transform muzzle;
+    public float buki = 1;
+    
+    private float bulletspeed;
     private Transform PlayerTransform;
     public Transform neckBone;　//インスペクターで脊髄を選択
     private Animator animator;
@@ -73,6 +78,42 @@ public class myunitycahnScript : MonoBehaviour
             PlayerTransform.transform.position += -dir1 * speed * 0.3F * Time.deltaTime;
             animator.SetBool("walkb", true);
         }
+        //武器チェンジ
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            buki = 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            buki = 2;
+        }
+
+        //エイム
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            //ハンドガン
+            if((Input.GetKeyDown(KeyCode.Mouse0))&&(buki==1))
+            {
+                bulletspeed = 2000;
+                GameObject bullets = Instantiate(bullet) as GameObject;
+                Vector3 force;
+                force = muzzle.gameObject.transform.forward * bulletspeed;
+                bullets.GetComponent<Rigidbody>().AddForce(force);
+                bullets.transform.position = muzzle.position;
+            }
+            //マシンガン
+            if ((Input.GetKey(KeyCode.Mouse0))&&(buki==2))
+            {
+                bulletspeed = 2000;
+                GameObject bullets = Instantiate(bullet) as GameObject;
+                Vector3 force;
+                force = muzzle.gameObject.transform.forward * bulletspeed;
+                bullets.GetComponent<Rigidbody>().AddForce(force);
+                bullets.transform.position = muzzle.position;
+            }
+
+        }
+        
 
         //アニメーションの解除判定
         if (Input.GetKeyUp(KeyCode.W))
