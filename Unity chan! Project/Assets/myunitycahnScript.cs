@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class myunitycahnScript : MonoBehaviour
 {
@@ -12,8 +13,18 @@ public class myunitycahnScript : MonoBehaviour
     public GameObject bullet;
     public Transform muzzle;
     public float buki = 1;
-    
+    public int bullet1count;
+    public int bullet2count;
+    public Text magajin1;
+    public Text magajin2;
+
+    private int bullet1magajin = 16;
+    private int bullet2magajin = 32;
+
     private float bulletspeed;
+   
+    [SerializeField] private GameObject Camera;
+    [SerializeField] private GameObject aimCamera;
     private Transform PlayerTransform;
     public Transform neckBone;　//インスペクターで脊髄を選択
     private Animator animator;
@@ -24,10 +35,19 @@ public class myunitycahnScript : MonoBehaviour
     void Start()
     {
         speed = 5F;
+        bullet1count = bullet1magajin;
+        bullet2count = bullet2magajin;
         
         animator = GetComponent<Animator>();
         PlayerTransform = transform.parent;
         _rigidbody = this.GetComponent<Rigidbody>();
+
+        //UI
+        magajin1.text = bullet1count + "/" + bullet1magajin;
+        magajin2.enabled = false;
+
+       
+
     }
 
     // Update is called once per frame
@@ -53,6 +73,7 @@ public class myunitycahnScript : MonoBehaviour
             animator.SetBool("walk", true);
 
         }
+
         //走り
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
         {
@@ -82,34 +103,84 @@ public class myunitycahnScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             buki = 1;
+            magajin1.enabled = true;
+            magajin2.enabled = false;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             buki = 2;
+            magajin1.enabled = false;
+            magajin2.enabled = true;
         }
+        //カメラ
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            Camera.SetActive(false);
+            aimCamera.SetActive(true);
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            Camera.SetActive(true);
+            aimCamera.SetActive(false);
+        }
+        //リロード
+        if ((Input.GetKeyDown(KeyCode.R)) && (buki == 1))
+        {
+            bullet1count = bullet1magajin;
+        }
+        if ((Input.GetKeyDown(KeyCode.R)) && (buki == 2))
+        {
+            bullet2count = bullet2magajin;
+        }
+        //UI
+        //if (buki == 1)
+        //{
+            magajin1.text = bullet1count + "/" + bullet1magajin;
+        //}
+        //if (buki == 2)
+        //{
+            magajin2.text = bullet2count + "/" + bullet2magajin;
+        //}
 
         //エイム
         if (Input.GetKey(KeyCode.Mouse1))
         {
+           
+            animator.SetBool("aim", true);
+           
             //ハンドガン
-            if((Input.GetKeyDown(KeyCode.Mouse0))&&(buki==1))
+            if ((Input.GetKeyDown(KeyCode.Mouse0))&&(buki==1))
             {
-                bulletspeed = 2000;
+                
+                bulletspeed = 5000;
+                if(bullet1count<1)
+                {
+                    return;
+                }
                 GameObject bullets = Instantiate(bullet) as GameObject;
                 Vector3 force;
                 force = muzzle.gameObject.transform.forward * bulletspeed;
                 bullets.GetComponent<Rigidbody>().AddForce(force);
                 bullets.transform.position = muzzle.position;
+                bullet1count -= 1;
+
             }
             //マシンガン
             if ((Input.GetKey(KeyCode.Mouse0))&&(buki==2))
             {
+                
                 bulletspeed = 2000;
+                if (bullet2count < 1)
+                {
+                    return;
+                }
                 GameObject bullets = Instantiate(bullet) as GameObject;
                 Vector3 force;
                 force = muzzle.gameObject.transform.forward * bulletspeed;
                 bullets.GetComponent<Rigidbody>().AddForce(force);
                 bullets.transform.position = muzzle.position;
+                bullet2count -= 1;
+
             }
 
         }
@@ -138,6 +209,11 @@ public class myunitycahnScript : MonoBehaviour
         {
             animator.SetBool("run", false);
 
+        }
+        if(Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            animator.SetBool("aim", false);
+           
         }
 
     }
