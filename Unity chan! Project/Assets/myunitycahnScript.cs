@@ -31,6 +31,9 @@ public class myunitycahnScript : MonoBehaviour
     private Animator animator;
     private Rigidbody _rigidbody;
     float yaw, pitch;
+    private AudioSource sound1;
+    private AudioSource sound2;
+    private AudioSource sound3;
 
     // Use this for initialization
     void Start()
@@ -47,9 +50,14 @@ public class myunitycahnScript : MonoBehaviour
         magajin1.text = bullet1count + "/" + bullet1magajin;
         magajin2.enabled = false;
         reticule.enabled = false;
-        
 
-       
+
+        //sound
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        sound1 = audioSources[0];
+        sound2 = audioSources[1];
+        sound3 = audioSources[2];
+
 
     }
 
@@ -106,12 +114,14 @@ public class myunitycahnScript : MonoBehaviour
         //武器チェンジ
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
+            sound3.PlayOneShot(sound3.clip);
             buki = 1;
             magajin1.enabled = true;
             magajin2.enabled = false;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            sound3.PlayOneShot(sound3.clip);
             buki = 2;
             magajin1.enabled = false;
             magajin2.enabled = true;
@@ -130,20 +140,27 @@ public class myunitycahnScript : MonoBehaviour
         //リロード
         if ((Input.GetKeyDown(KeyCode.R)) && (buki == 1))
         {
-            bullet1count = bullet1magajin;
+            sound2.PlayOneShot(sound2.clip);
+            Invoke("rero1", 1.0f);
+            //bullet1count = bullet1magajin;
+           
         }
         if ((Input.GetKeyDown(KeyCode.R)) && (buki == 2))
         {
-            bullet2count = bullet2magajin;
+            sound2.PlayOneShot(sound2.clip);
+            Invoke("rero2", 1.0f);
+            //bullet2count = bullet2magajin;
+
         }
         //UI
         //if (buki == 1)
         //{
             magajin1.text = bullet1count + "/" + bullet1magajin;
+       
         //}
         //if (buki == 2)
         //{
-            magajin2.text = bullet2count + "/" + bullet2magajin;
+        magajin2.text = bullet2count + "/" + bullet2magajin;
         //}
 
         //エイム
@@ -169,6 +186,7 @@ public class myunitycahnScript : MonoBehaviour
                 force = muzzle.gameObject.transform.forward * bulletspeed;
                 bullets.GetComponent<Rigidbody>().AddForce(force);
                 bullets.transform.position = muzzle.position;
+                sound1.PlayOneShot(sound1.clip);
                 bullet1count -= 1;
 
             }
@@ -186,6 +204,7 @@ public class myunitycahnScript : MonoBehaviour
                 force = muzzle.gameObject.transform.forward * bulletspeed;
                 bullets.GetComponent<Rigidbody>().AddForce(force);
                 bullets.transform.position = muzzle.position;
+                sound1.PlayOneShot(sound1.clip);
                 bullet2count -= 1;
 
             }
@@ -233,6 +252,14 @@ public class myunitycahnScript : MonoBehaviour
         {
             neckBone.Rotate(0f, 0f, pitch);//ピッチ角 neckボーンを回転
         }
+    }
+    void rero1()
+    {
+        bullet1count = bullet1magajin;
+    }
+    void rero2()
+    {
+        bullet2count = bullet2magajin;
     }
 }
 
