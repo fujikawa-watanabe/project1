@@ -17,6 +17,7 @@ public class myunitycahnScript : MonoBehaviour
     public int bullet2count;
     public Text magajin1;
     public Text magajin2;
+    public Image reticule;
 
     private int bullet1magajin = 16;
     private int bullet2magajin = 32;
@@ -40,11 +41,13 @@ public class myunitycahnScript : MonoBehaviour
         
         animator = GetComponent<Animator>();
         PlayerTransform = transform.parent;
-        _rigidbody = this.GetComponent<Rigidbody>();
+        _rigidbody = this.transform.GetComponent<Rigidbody>();
 
         //UI
         magajin1.text = bullet1count + "/" + bullet1magajin;
         magajin2.enabled = false;
+        reticule.enabled = false;
+        
 
        
 
@@ -69,6 +72,7 @@ public class myunitycahnScript : MonoBehaviour
         //歩き
         if (Input.GetKey(KeyCode.W))
         {
+           // _rigidbody.AddForce(transform.forward * speed);
             PlayerTransform.transform.position += dir1 * speed * 0.3F * Time.deltaTime;
             animator.SetBool("walk", true);
 
@@ -147,12 +151,15 @@ public class myunitycahnScript : MonoBehaviour
         {
            
             animator.SetBool("aim", true);
+            reticule.enabled = true;
+       
+
            
             //ハンドガン
             if ((Input.GetKeyDown(KeyCode.Mouse0))&&(buki==1))
             {
                 
-                bulletspeed = 5000;
+                bulletspeed = 7000;
                 if(bullet1count<1)
                 {
                     return;
@@ -169,7 +176,7 @@ public class myunitycahnScript : MonoBehaviour
             if ((Input.GetKey(KeyCode.Mouse0))&&(buki==2))
             {
                 
-                bulletspeed = 2000;
+                bulletspeed = 7000;
                 if (bullet2count < 1)
                 {
                     return;
@@ -213,6 +220,8 @@ public class myunitycahnScript : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Mouse1))
         {
             animator.SetBool("aim", false);
+            reticule.enabled = false;
+
            
         }
 
