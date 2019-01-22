@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class myunitycahnScript : MonoBehaviour
 {
@@ -27,7 +26,7 @@ public class myunitycahnScript : MonoBehaviour
     public int mypreHP;
     public int damage = 1;
     public Slider myslider;
-    private bool h;
+    
 
     private int bullet1magajin = 16;
     private int bullet2magajin = 32;
@@ -72,7 +71,7 @@ public class myunitycahnScript : MonoBehaviour
         magajin2.enabled = false;
         reticule.enabled = false;
         gameover.enabled = false;
-        revive.enabled = false;
+        
         myslider.value = mymaxHP;
         mypreHP = mymaxHP;
 
@@ -95,7 +94,7 @@ public class myunitycahnScript : MonoBehaviour
     {
 
 
-        StartCoroutine("Damehan");
+        
         //float X_Rotation = Input.GetAxis("Mouse X");
         yaw += Input.GetAxis("Mouse X") * xkando; //マウスの入力X
         pitch += Input.GetAxis("Mouse Y") * ykando;　//マウスの入力Y
@@ -256,7 +255,7 @@ public class myunitycahnScript : MonoBehaviour
             if(mypreHP<=0)
             {
                 gameover.enabled = true;
-                revive.enabled = true;
+                
             }
         }
 
@@ -291,6 +290,7 @@ public class myunitycahnScript : MonoBehaviour
 
 
         }
+        StartCoroutine("Damehan");
 
     }
     //Updateでアニメーション適用後に直接ボーンをいじる

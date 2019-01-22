@@ -482,7 +482,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 2082838945}
   m_HandleRect: {fileID: 0}
@@ -874,7 +874,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 734350357}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!124 &734350360
 Behaviour:
   m_ObjectHideFlags: 0
