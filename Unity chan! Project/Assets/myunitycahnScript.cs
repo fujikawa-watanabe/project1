@@ -28,6 +28,8 @@ public class myunitycahnScript : MonoBehaviour
     [SerializeField] private GameObject aimCamera;
     private Transform PlayerTransform;
     public Transform neckBone;　//インスペクターで脊髄を選択
+    public Transform rarm;
+    public Transform larm;
     private Animator animator;
     private Rigidbody _rigidbody;
     float yaw, pitch;
@@ -252,6 +254,12 @@ public class myunitycahnScript : MonoBehaviour
         {
             neckBone.Rotate(0f, 0f, pitch);//ピッチ角 neckボーンを回転
         }
+        if((rarm!=null)&&(larm!=null)&&(Input.GetKey(KeyCode.Mouse1)))
+        {
+            rarm.Rotate(0f, 0f, -pitch);
+            larm.Rotate(0f, 0f, -pitch);
+        }
+
     }
     void rero1()
     {

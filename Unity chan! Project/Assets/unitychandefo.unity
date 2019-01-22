@@ -405,6 +405,10 @@ Transform:
   m_Father: {fileID: 1633387675}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -91.284, y: -157.026, z: 248.60101}
+--- !u!4 &508435080 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400014, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
+  m_PrefabInternal: {fileID: 871120196}
 --- !u!1 &734350357
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,6 +758,8 @@ MonoBehaviour:
   Camera: {fileID: 281465201}
   aimCamera: {fileID: 895962731}
   neckBone: {fileID: 1633387675}
+  rarm: {fileID: 1282947173}
+  larm: {fileID: 508435080}
 --- !u!82 &883403305
 AudioSource:
   m_ObjectHideFlags: 0
