@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class myunitycahnScript : MonoBehaviour
 {
@@ -17,13 +18,22 @@ public class myunitycahnScript : MonoBehaviour
     public int bullet2count;
     public Text magajin1;
     public Text magajin2;
+    public Text gameover;
+    public Button revive;
     public Image reticule;
+
+    public float myHP;
+    public int mymaxHP = 10;
+    public int mypreHP;
+    public int damage = 1;
+    public Slider myslider;
+    private bool h;
 
     private int bullet1magajin = 16;
     private int bullet2magajin = 32;
 
     private float bulletspeed;
-   
+
     [SerializeField] private GameObject Camera;
     [SerializeField] private GameObject aimCamera;
     private Transform PlayerTransform;
@@ -37,13 +47,22 @@ public class myunitycahnScript : MonoBehaviour
     private AudioSource sound2;
     private AudioSource sound3;
 
+    //Enemymotion script;
+    public GameObject Enemy;
+
+    public float span = 0.1f;
+    public bool muteki=false;
+
+
+
+    
     // Use this for initialization
     void Start()
     {
         speed = 5F;
         bullet1count = bullet1magajin;
         bullet2count = bullet2magajin;
-        
+
         animator = GetComponent<Animator>();
         PlayerTransform = transform.parent;
         _rigidbody = this.transform.GetComponent<Rigidbody>();
@@ -52,6 +71,10 @@ public class myunitycahnScript : MonoBehaviour
         magajin1.text = bullet1count + "/" + bullet1magajin;
         magajin2.enabled = false;
         reticule.enabled = false;
+        gameover.enabled = false;
+        revive.enabled = false;
+        myslider.value = mymaxHP;
+        mypreHP = mymaxHP;
 
 
         //sound
@@ -61,11 +84,18 @@ public class myunitycahnScript : MonoBehaviour
         sound3 = audioSources[2];
 
 
+        //h = Enemy.GetComponent<Enemymotion>().attack_result;
+
+       
     }
+    
 
     // Update is called once per frame
     void Update()
     {
+
+
+        StartCoroutine("Damehan");
         //float X_Rotation = Input.GetAxis("Mouse X");
         yaw += Input.GetAxis("Mouse X") * xkando; //マウスの入力X
         pitch += Input.GetAxis("Mouse Y") * ykando;　//マウスの入力Y
@@ -82,7 +112,7 @@ public class myunitycahnScript : MonoBehaviour
         //歩き
         if (Input.GetKey(KeyCode.W))
         {
-           // _rigidbody.AddForce(transform.forward * speed);
+            // _rigidbody.AddForce(transform.forward * speed);
             PlayerTransform.transform.position += dir1 * speed * 0.3F * Time.deltaTime;
             animator.SetBool("walk", true);
 
@@ -114,7 +144,7 @@ public class myunitycahnScript : MonoBehaviour
             animator.SetBool("walkb", true);
         }
         //武器チェンジ
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             sound3.PlayOneShot(sound3.clip);
             buki = 1;
@@ -145,7 +175,7 @@ public class myunitycahnScript : MonoBehaviour
             sound2.PlayOneShot(sound2.clip);
             Invoke("rero1", 1.0f);
             //bullet1count = bullet1magajin;
-           
+
         }
         if ((Input.GetKeyDown(KeyCode.R)) && (buki == 2))
         {
@@ -157,8 +187,8 @@ public class myunitycahnScript : MonoBehaviour
         //UI
         //if (buki == 1)
         //{
-            magajin1.text = bullet1count + "/" + bullet1magajin;
-       
+        magajin1.text = bullet1count + "/" + bullet1magajin;
+
         //}
         //if (buki == 2)
         //{
@@ -168,18 +198,18 @@ public class myunitycahnScript : MonoBehaviour
         //エイム
         if (Input.GetKey(KeyCode.Mouse1))
         {
-           
+
             animator.SetBool("aim", true);
             reticule.enabled = true;
-       
 
-           
+
+
             //ハンドガン
-            if ((Input.GetKeyDown(KeyCode.Mouse0))&&(buki==1))
+            if ((Input.GetKeyDown(KeyCode.Mouse0)) && (buki == 1))
             {
-                
+
                 bulletspeed = 7000;
-                if(bullet1count<1)
+                if (bullet1count < 1)
                 {
                     return;
                 }
@@ -193,9 +223,9 @@ public class myunitycahnScript : MonoBehaviour
 
             }
             //マシンガン
-            if ((Input.GetKey(KeyCode.Mouse0))&&(buki==2))
+            if ((Input.GetKey(KeyCode.Mouse0)) && (buki == 2))
             {
-                
+
                 bulletspeed = 7000;
                 if (bullet2count < 1)
                 {
@@ -212,10 +242,26 @@ public class myunitycahnScript : MonoBehaviour
             }
 
         }
-        
+        //ダメージ
+        if (Enemy.GetComponent<Enemymotion>().attack_result == true)
+        {
+            if (muteki == true)
+            {
+                return;
+            }
+            Debug.Log("dam");
+            mypreHP -= damage;
+            myslider.value = mypreHP;
+            muteki = true;
+            if(mypreHP<=0)
+            {
+                gameover.enabled = true;
+                revive.enabled = true;
+            }
+        }
 
-        //アニメーションの解除判定
-        if (Input.GetKeyUp(KeyCode.W))
+            //アニメーションの解除判定
+            if (Input.GetKeyUp(KeyCode.W))
         {
             animator.SetBool("walk", false);
         }
@@ -238,12 +284,12 @@ public class myunitycahnScript : MonoBehaviour
             animator.SetBool("run", false);
 
         }
-        if(Input.GetKeyUp(KeyCode.Mouse1))
+        if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             animator.SetBool("aim", false);
             reticule.enabled = false;
 
-           
+
         }
 
     }
@@ -254,13 +300,14 @@ public class myunitycahnScript : MonoBehaviour
         {
             neckBone.Rotate(0f, 0f, pitch);//ピッチ角 neckボーンを回転
         }
-        if((rarm!=null)&&(larm!=null)&&(Input.GetKey(KeyCode.Mouse1)))
+        if ((rarm != null) && (larm != null) && (Input.GetKey(KeyCode.Mouse1)))
         {
             rarm.Rotate(0f, 0f, -pitch);
             larm.Rotate(0f, 0f, -pitch);
         }
-
+        
     }
+    
     void rero1()
     {
         bullet1count = bullet1magajin;
@@ -269,6 +316,21 @@ public class myunitycahnScript : MonoBehaviour
     {
         bullet2count = bullet2magajin;
     }
+    bool isrun = false;
+    IEnumerator Damehan()
+    {
+        if (isrun)
+            yield break; 
+        isrun = true;
+        Debug.Log("coru");
+        yield return new WaitForSeconds(4.0f);
+        if (muteki == true)
+        {
+            muteki = false;
+        }
+        isrun = false;
+    }
+
 }
 
 
